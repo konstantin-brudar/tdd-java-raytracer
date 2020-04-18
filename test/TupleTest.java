@@ -121,4 +121,13 @@ public class TupleTest {
         assertTrue(tuple3.equal(tuple1.cross(tuple2)));
         assertTrue(tuple4.equal(tuple2.cross(tuple1)));
     }
+
+    @Test
+    public void prod() {
+        Tuple tuple1 = new Tuple(1, 0.2, 0.4, 0);
+        Tuple tuple2 = new Tuple(0.9, 1, 0.1, 0);
+        Tuple tuple3 = new Tuple(0.9, 0.2, 0.04, 0);
+
+        assertTrue(tuple3.equal(tuple1.prod(tuple2)));
+    }
 }

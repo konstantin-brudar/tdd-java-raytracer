@@ -62,4 +62,8 @@ public class Tuple {
         double c = x * tuple.y - y * tuple.x;
         return new Tuple(a, b, c, 0);
     }
+
+    public Tuple prod(Tuple tuple) {
+        return new Tuple(x * tuple.x, y * tuple.y, z * tuple.z, w * tuple.w);
+    }
 }

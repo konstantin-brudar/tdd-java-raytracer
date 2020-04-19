@@ -3,6 +3,10 @@ public class Color extends Tuple {
         super(red, green, blue, 0.0);
     }
 
+    public Color(Color color) {
+        super(color.red(), color.green(), color.blue(), 0.0);
+    }
+
     public double red() {
         return x;
     }

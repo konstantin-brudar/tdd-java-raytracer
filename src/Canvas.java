@@ -12,9 +12,9 @@ public class Canvas {
         this.width = width;
         this.height = height;
         colors = new Color[height][width];
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                colors[i][j] = new Color(0.0, 0.0, 0.0);
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                colors[y][x] = new Color(0.0, 0.0, 0.0);
             }
         }
     }
@@ -27,25 +27,25 @@ public class Canvas {
         return height;
     }
 
-    public Color getPixel(int i, int j) {
-        return colors[i][j];
+    public Color getPixel(int x, int y) {
+        return colors[y][x];
     }
 
-    public void setPixel(int i, int j, Color color) {
-        colors[i][j] = new Color(color);
+    public void setPixel(int x, int y, Color color) {
+        colors[y][x] = new Color(color);
     }
 
     public void saveImage(String filename) {
         File image = new File(filename);
         BufferedImage buffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
-        for (int x = 0; x < height; x++) {
-            for (int y = 0; y < width; y++) {
-                float red = (float) colors[x][y].red();
-                float green = (float) colors[x][y].green();
-                float blue = (float) colors[x][y].blue();
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                float red = (float) colors[y][x].red();
+                float green = (float) colors[y][x].green();
+                float blue = (float) colors[y][x].blue();
                 int color = new java.awt.Color(red, green, blue).getRGB();
-                buffer.setRGB(y, x, color);
+                buffer.setRGB(x, y, color);
             }
         }
 

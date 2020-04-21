@@ -18,9 +18,9 @@ public class CanvasTest {
     public void canvasGetColor() {
         Canvas canvas = new Canvas(10, 20);
 
-        for (int i = 0; i < canvas.height(); i++) {
-            for (int j = 0; j < canvas.width(); j++) {
-                Color color = canvas.getPixel(i, j);
+        for (int y = 0; y < canvas.height(); y++) {
+            for (int x = 0; x < canvas.width(); x++) {
+                Color color = canvas.getPixel(x, y);
                 assertEquals(0.0, color.red(), EPSILON);
                 assertEquals(0.0, color.green(), EPSILON);
                 assertEquals(0.0, color.blue(), EPSILON);

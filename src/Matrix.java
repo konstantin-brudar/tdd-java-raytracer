@@ -34,7 +34,7 @@ public class Matrix {
 
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
-                if (this.matrix[row][col] != matrix.getElement(row, col)) {
+                if (!Operation.equal(this.matrix[row][col],matrix.getElement(row, col))) {
                     areEqual = false;
                     break;
                 }
@@ -70,6 +70,80 @@ public class Matrix {
         result.y = this.matrix[1][0] * tuple.x + this.matrix[1][1] * tuple.y + this.matrix[1][2] * tuple.z + this.matrix[1][3] * tuple.w;
         result.z = this.matrix[2][0] * tuple.x + this.matrix[2][1] * tuple.y + this.matrix[2][2] * tuple.z + this.matrix[2][3] * tuple.w;
         result.w = this.matrix[3][0] * tuple.x + this.matrix[3][1] * tuple.y + this.matrix[3][2] * tuple.z + this.matrix[3][3] * tuple.w;
+
+        return result;
+    }
+
+    public Matrix transpose() {
+        Matrix result = new Matrix(size);
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                result.setElement(col, row, matrix[row][col]);
+            }
+        }
+        return result;
+    }
+
+    public double det() {
+        double result = 0.0;
+        if (size == 2) {
+            result = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+        } else {
+            for (int col = 0; col < size; col++) {
+                result += matrix[0][col] * cofactor(0, col);
+            }
+        }
+        return result;
+    }
+
+    public Matrix submatrix(int row, int col) {
+        Matrix result = new Matrix(size - 1);
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (i != row && j != col) {
+                    int m = i < row ? i : i - 1;
+                    int n = j < col ? j : j - 1;
+                    result.setElement(m, n, matrix[i][j]);
+                }
+            }
+        }
+        return result;
+    }
+
+    public double minor(int row, int col) {
+        return submatrix(row, col).det();
+    }
+
+    public double cofactor(int row, int col) {
+        int sign = (row + col) % 2 == 0 ? 1 : -1;
+        return sign * minor(row, col);
+    }
+
+    public boolean isInvertible() {
+        return det() != 0;
+    }
+
+    public Matrix inverse() {
+        if (!isInvertible()) {
+            return null;
+        }
+
+        Matrix result = new Matrix(size);
+
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                result.setElement(row, col, cofactor(row, col));
+            }
+        }
+
+        result = result.transpose();
+        double determinant = det();
+
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                result.setElement(row, col, result.getElement(row, col) / determinant);
+            }
+        }
 
         return result;
     }
